@@ -1,0 +1,46 @@
+# Logs
+logs/
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.lh
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Build directories
+dist/
+dist-ssr/
+
+# Dotenv environment variable files
+.env
+.env.test
+.env.development
+.env.production
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local development
+*.local
+
+# Misc
+.cache/
+.next/
+.nuxt/
+.vercel
+# files
+final
+mode
