@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bycrpt = require("bcrypt");
 const slugify = require("slugify");
 const tourSchema = new mongoose.Schema(
   {
@@ -80,6 +81,10 @@ tourSchema.virtual("durationWeeks").get(function () {
 });
 tourSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
+  next();
+});
+tourSchema.pre("save", function (next) {
+  this.password = bycrpt.hash(this.password, 12);
   next();
 });
 const Tour = mongoose.model("Tour", tourSchema);
