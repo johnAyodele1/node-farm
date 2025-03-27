@@ -156,6 +156,29 @@ exports.protect = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteUser = (req, res, next) => {
+  try {
+    const user = User.findById(req.user.id);
+    user.findByIdAndUpdate(
+      req.user.id,
+      { active: false },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(204).json({
+      status: "success",
+      data: "null",
+    });
+  } catch (err) {
+    res.status(204).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
 exports.updateUser = async (req, res, next) => {
   try {
     if (req.body.password || req.body.passwordConfirm) {

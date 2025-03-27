@@ -18,4 +18,5 @@ router.route("/updatepassword").patch(userController.updatePassword);
 router.route("/forgetpassword").post(userController.forgetPassword);
 router.route("/verifyemail").post(userController.verifyEmail);
 router.patch("/resetpassword/:token", userController.resetPassword);
+router.delete("/delete", userController.deleteUser);
 module.exports = router;
