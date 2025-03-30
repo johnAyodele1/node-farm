@@ -8,6 +8,7 @@ router
   .route("/top5cheap")
   .get(
     userController.protect,
+    userController.protect,
     tourController.cheapTour,
     tourController.getAllTour
   );
