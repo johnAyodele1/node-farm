@@ -1,9 +1,30 @@
 const express = require("express");
 const app = express();
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 const tourRoute = require("./starter/routes/tourRouter");
 const userRoute = require("./starter/routes/userRouter");
-app.use(express.json());
+const mongoSanitize = require("express-mongo-sanitize");
+const xss = require("xss-clean");
+// Data sanitization against NoSQL injection
+app.use(helmet());
+app.use(mongoSanitize());
+// Data sanitization against SQL injection
 
+app.use(xss());
+app.use(
+  express.json({
+    limit: "10kb",
+  })
+);
+
+const limiter = rateLimit({
+  max: 100,
+  windowMS: 60 * 60 * 1000,
+  message:
+    "Too many request from this IP address. Please, try again in an hour.",
+});
+app.use("/api", limiter);
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();

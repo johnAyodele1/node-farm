@@ -9,7 +9,18 @@ const signToken = (id) => {
     expiresIn: "10h",
   });
 };
+const cookieOptions = {
+  expires: new Date(Date.now() + 900000),
 
+  httpOnly: true,
+};
+//set cookie secure to true when in production
+if (process.env.NODE_ENV === "production") {
+  cookieOptions.secure = true;
+}
+const cookie = (token, res) => {
+  res.cookie("jwt", token, cookieOptions);
+};
 const fliterOj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
@@ -47,6 +58,7 @@ exports.createUser = async (req, res) => {
     const body = ({ email, password, name } = req.body);
     const newUser = await User.create(body);
     const token = signToken(newUser);
+    cookie(token, res);
     res.status(201).json({
       status: "success",
       token,
